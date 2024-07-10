@@ -1,6 +1,12 @@
 Pre-requisites 
 1. Download and install virutual box https://www.virtualbox.org/wiki/Downloads
+    sudo dpkg -i virtualbox-7.0_7.0.18-162988~Ubuntu~jammy_amd64.deb
+    above migth result in errors during installation of virtualbox, To resolve the errors and install virtualbox run below command
+    sudo apt -f install
 2. Instsall vagrant to provision virtual machines
+    wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt update && sudo apt install vagrant
 3. Download the code repository using git clone (or download as zip)
 4. Goto code reposistory directory and run command: vagrant up (this will provision 3 virtual machines named controlplane, node01 and node02)
 5. Verify virtual machines by running command: vagrant status
