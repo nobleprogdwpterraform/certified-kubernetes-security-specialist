@@ -16,8 +16,7 @@ Pre-requisites
 7. Cluster Installation:
         Installation using kubeadm (https://v1-29.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
     
-        7.1 Installing container runtime containderd
-            https://v1-29.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/
+        7.1 Installing container runtime containderd://v1-29.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/
         7.1.1 Enable IPV4 forwarding
             ----Run below on all nodes for Forwarding IPv4 ------------------
             cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
