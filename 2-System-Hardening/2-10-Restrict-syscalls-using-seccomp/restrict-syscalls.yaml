@@ -1,0 +1,2 @@
+
+		docker run -it --rm --security-opt seccomp=/root/custom.json \ docker/whalesay /bin/bash

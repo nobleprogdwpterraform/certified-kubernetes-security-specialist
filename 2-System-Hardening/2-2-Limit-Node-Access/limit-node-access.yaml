@@ -1,0 +1,7 @@
+		- commands id, who, last
+	- /etc/passwd, /etc/shadow /etc/group
+	- usermod -s /bin/nologin michael
+	- userdel bob
+	- deluser michel admin
+	- groupdel devs
+	
