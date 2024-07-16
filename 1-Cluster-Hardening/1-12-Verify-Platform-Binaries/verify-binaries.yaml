@@ -1,0 +1,6 @@
+	- Download kubernetes source code binaries in /opt folder 
+		Go to https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1302 where download link and checksum are there
+		wget -O /opt/kubernetes.tar.gz https://dl.k8s.io/v1.30.0/kubernetes.tar.gz
+	- Verfiy checksum of downloaded binaries:
+		sha512sum /opt/kubernetes.tar.gz
+

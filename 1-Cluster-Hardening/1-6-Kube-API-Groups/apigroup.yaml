@@ -1,0 +1,5 @@
+curl -sk  https://10.0.3.16:6443/version
+
+kubectl proxy --api-prefix=/
+http://localhost:8001/api/v1/pods /apis/apps/v1/deployments
+

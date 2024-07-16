@@ -1,0 +1,15 @@
+
+	Copy content of ./.kube/config to home diretory on host at location .kube/config
+	verify kubectl get pods -A
+	
+		
+		kubectl proxy --api-prefix=/
+		http://localhost:8001/api/v1/pods /apis/apps/v1/deployments
+
+
+		kubectl run nginx-pod --image=nginx --restart=Never --port=80 -n default
+		kubectl expose pod nginx-pod --type=NodePort --port=80 --name=nginx-service
+		http://node01_ip:30368 on host machine 
+
+		kubectl port-forward service/nginx-service 8005:80
+		on host machine: http://localhost:8005

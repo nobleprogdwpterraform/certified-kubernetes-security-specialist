@@ -1,6 +1,9 @@
-one of the most commonly used tool is the CIS a benchmarking tool so CIS stands for the center for internet 
-security and it is a community-driven non-profit organization whose mission is to make the connected world 
-is safer place by developing validating and promoting timely best practice Solutions that help people
- businesses and governments protect themselves against pervasive cyber threats
-
- 
+Run CIS Benchmark Assessment tool on Ubuntu
+	Download CIS-CAT lite tool by registring on cisbenchmark website, extract the zip file and copy the Assesor folder in Downloads and open Downloads 
+	in termal 
+	Java is not installed by default, 
+	sudo apt update
+	sudo apt install default-jre 
+	sudo sh ./Assessor-CLI.sh -i -rd /var/www/html -nts -i -rp index 
+	Benchmarks/Data-Stream Collections: : CIS Ubuntu Linux 22.04 LTS Benchmark v2.0.1
+	Profile : Level 1 - Server
