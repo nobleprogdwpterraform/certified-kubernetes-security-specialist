@@ -11,7 +11,7 @@ kubectl create sa ingress-nginx-admission -n ingress-nginx
 
 
 4. Next We have created the Roles, RoleBindings, ClusterRoles, and ClusterRoleBindings for the ServiceAccount
-------------Role for ingress-nginx service account--------------
+#------------Role for ingress-nginx service account--------------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -97,7 +97,8 @@ rules:
   - create
   - patch
 
------------ role for service account ingress-nginx-admission---------------
+---
+#----------- role for service account ingress-nginx-admission---------------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -124,7 +125,8 @@ rules:
   - get
   - create
 
--------ClusterRole for service account ingress-nginx-------------
+---
+#-------ClusterRole for service account ingress-nginx-------------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -193,7 +195,8 @@ rules:
   - list
   - watch
 
-----------Cluster role for service account ingress-nginx-admission---------
+---
+#----------Cluster role for service account ingress-nginx-admission---------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -218,7 +221,8 @@ rules:
   - get
   - update
 
----------Role binding for role ingress-nginx--------
+---
+#---------Role binding for role ingress-nginx--------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -244,7 +248,8 @@ subjects:
   name: ingress-nginx
   namespace: ingress-nginx
 
-------Role binding for role ingress-nginx-admission--------
+---
+#------Role binding for role ingress-nginx-admission--------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -273,7 +278,8 @@ subjects:
   name: ingress-nginx-admission
   namespace: ingress-nginx
 
---------Cluster role binding for role ingress-nginx----------
+---
+#--------Cluster role binding for role ingress-nginx----------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -297,7 +303,8 @@ subjects:
   name: ingress-nginx
   namespace: ingress-nginx
 
--------Cluster role binding for role ingress-nginx-admission---------
+---
+#-------Cluster role binding for role ingress-nginx-admission---------
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -511,16 +518,11 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2024-07-14T01:00:54Z"
-  generation: 1
   name: webapp-wear
   namespace: app-space
-  resourceVersion: "2057"
-  uid: 5d66d8d4-75ef-4110-a120-0a6ac75784ca
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: webapp-wear
@@ -531,7 +533,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: webapp-wear
     spec:
@@ -546,29 +547,8 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2024-07-14T01:00:58Z"
-    lastUpdateTime: "2024-07-14T01:00:58Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2024-07-14T01:00:54Z"
-    lastUpdateTime: "2024-07-14T01:00:58Z"
-    message: ReplicaSet "webapp-wear-6f8947f6cc" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
 
 ---------------------------
 apiVersion: apps/v1
@@ -576,16 +556,11 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2024-07-14T01:00:54Z"
-  generation: 1
   name: webapp-video
   namespace: app-space
-  resourceVersion: "2067"
-  uid: 222438d3-90d7-4274-8a05-ef23eb341c3a
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: webapp-video
@@ -596,7 +571,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: webapp-video
     spec:
@@ -615,50 +589,20 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2024-07-14T01:00:59Z"
-    lastUpdateTime: "2024-07-14T01:00:59Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2024-07-14T01:00:54Z"
-    lastUpdateTime: "2024-07-14T01:00:59Z"
-    message: ReplicaSet "webapp-video-74bdc86cb8" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
 
 ------------
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2024-07-14T01:00:54Z"
   name: wear-service
   namespace: app-space
-  resourceVersion: "2005"
-  uid: 436b419f-88c9-4321-b326-8dc53dd8d950
 spec:
-  clusterIP: 10.104.217.219
-  clusterIPs:
-  - 10.104.217.219
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
     app: webapp-wear
-  sessionAffinity: None
   type: ClusterIP
 status:
   loadBalancer: {}
@@ -667,26 +611,15 @@ status:
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2024-07-14T01:00:54Z"
   name: video-service
   namespace: app-space
-  resourceVersion: "2022"
-  uid: 664022f9-c2b3-4111-b55a-b822c77af19f
 spec:
-  clusterIP: 10.111.97.207
-  clusterIPs:
-  - 10.111.97.207
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
     app: webapp-video
-  sessionAffinity: None
   type: ClusterIP
 status:
   loadBalancer: {}

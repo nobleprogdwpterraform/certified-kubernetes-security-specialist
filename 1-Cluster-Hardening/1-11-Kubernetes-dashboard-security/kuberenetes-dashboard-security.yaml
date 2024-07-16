@@ -1,51 +1,9 @@
-	
-	- kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-		kubectl proxy --disable-filter &
-	- http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 
-
-	- Create cluster role with cluster admin access
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: ClusterRole
-		metadata:
-		  annotations:
-			rbac.authorization.kubernetes.io/autoupdate: "true"
-		  creationTimestamp: "2024-07-13T17:10:43Z"
-		  labels:
-			kubernetes.io/bootstrapping: rbac-defaults
-		  name: cluster-admin
-		  resourceVersion: "73"
-		  uid: dac5a864-3357-4c79-a365-df192e0321b8
-		rules:
-		- apiGroups:
-		  - '*'
-		  resources:
-		  - '*'
-		  verbs:
-		  - '*'
-		- nonResourceURLs:
-		  - '*'
-		  verbs:
-		  - '*'
-	- Create cluster role binding to bind clusterrole cluster-admin to a service account name admin-user
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: ClusterRoleBinding
-		metadata:
-		  creationTimestamp: "2024-07-13T17:25:55Z"
-		  name: admin-user-binding
-		  resourceVersion: "1677"
-		  uid: 04425b18-6feb-43b4-8df8-88e5bf90daf4
-		roleRef:
-		  apiGroup: rbac.authorization.k8s.io
-		  kind: ClusterRole
-		  name: cluster-admin
-		subjects:
-		- kind: ServiceAccount
-		  name: admin-user
-		  namespace: kubernetes-dashboard
 	- Create a service account name admin-user: kubectl create sa admin-user -n kubernetes-dashboard
 	- create a token for service account to login to dashboard: kubectl create token admin-user -n kubernetes-dashboard
-	- As you can see admin-user is too powerful, now create a readonly service account and assign the view cluster-role to this service account
+
+
 	- cat <<EOF | kubectl apply -f -
 	apiVersion: v1
 	kind: ServiceAccount
