@@ -1,4 +1,6 @@
-
+sudo apt-get update
+sudo apt-get install ufw
+		
 		ufw allow from 172.16.238.5 to any port 22 proto tcp (this command allow connection from the IP address 172.16.238.5 to the TCP board 22 on ANY reachable IP address on node01)
 		ufw deny 8080
 	

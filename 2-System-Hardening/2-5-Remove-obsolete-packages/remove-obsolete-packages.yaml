@@ -5,4 +5,4 @@
 		rm /lib/systemd/system/nginx.service (remove the unit file)
 	- Remove the nginx package from controlplane host.
 		apt remove nginx -y
-		apt install wget -y (you can install latest available version of a package using apt)
+		

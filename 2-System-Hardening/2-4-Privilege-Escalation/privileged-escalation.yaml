@@ -1,1 +1,1 @@
-privileged escalation
+cat /etc/sudoers

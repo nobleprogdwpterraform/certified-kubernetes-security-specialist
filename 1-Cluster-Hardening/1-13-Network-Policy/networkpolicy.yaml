@@ -19,9 +19,8 @@ spec:
       port: 3306
   egress:
   - to:
-    - ipBlpodSelectorock:
-        matchLabels:
-          role: api-pod
+    - ipBlock:
+        cidr: 192.168.2.4
     ports:
     - protocol: TCP
       port: 3306

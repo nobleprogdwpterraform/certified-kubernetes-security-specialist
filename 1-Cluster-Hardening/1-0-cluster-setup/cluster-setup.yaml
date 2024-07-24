@@ -3,6 +3,7 @@
 # sudo apt insall ./code....deb
 
 # Remove any existing virtual boxes using oracle virtualbox (right click and remove)
+# Clone the code repo by running command: git clone https://github.com/nobleprogdwpterraform/certified-kubernetes-security-specialist.git
 # go to Downloads and code repository (certified-kubernetes-security-specialist)
 # run vagrant up (to bring 3 nodes up, 1 master node and 2 worker nodes setup)
 
@@ -82,3 +83,28 @@ cat <<EOF | sudo tee /etc/default/kubelet
 KUBELET_EXTRA_ARGS='--node-ip ${PRIMARY_IP}'
 EOF
 
+------Run Below commands on controlplane node------------
+#14
+POD_CIDR=10.244.0.0/16
+SERVICE_CIDR=10.96.0.0/16
+sudo kubeadm init --pod-network-cidr $POD_CIDR --service-cidr $SERVICE_CIDR --apiserver-advertise-address $PRIMARY_IP
+
+#15. Set up the kubeconfig so it can be used by the user you are logged in as
+{
+    mkdir ~/.kube
+    sudo cp /etc/kubernetes/admin.conf ~/.kube/config
+    sudo chown $(id -u):$(id -g) ~/.kube/config
+    chmod 600 ~/.kube/config
+}
+#16 Verify the controlplane node
+kubectl get pods -n kube-system
+
+#17
+kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml"
+#18
+kubeadm token create --print-join-command
+
+---Run below on all worker nodes--
+#18
+Run the join command on all the worker nodes in cluster
+ 
