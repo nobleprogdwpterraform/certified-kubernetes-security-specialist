@@ -1,1 +1,5 @@
--Linux syscalls
+strace touch /tmp/error.log
+env | wc -l
+pidof etcd
+strace -p 9879
+

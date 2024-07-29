@@ -1,0 +1,65 @@
+sudo docker run --user=1001 --cap-add MAC_ADMIN ubuntu sleep 3600
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-pod
+spec:
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["sleep", "3600"]
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["sleep", "3600"]
+    securityContext:
+      runAsUser: 1000
+
+- To add capabilities use the capabilities option
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["sleep", "3600"]
+    securityContext:
+      runAsUser: 1000
+      capabilities:
+        add: ["MAC_ADMIN"]
+EOF
+kubectl exec -it web-pod -- date -s '19 APR 2012 11:14:00'
+#operation not permitted
+
+- Add SYS_TIME capability to the container's securityContext
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ["sleep", "3600"]
+    securityContext:
+      capabilities:
+        add: ["SYS_TIME"]
+EOF
+
+kubectl exec -it web-pod -- date -s '19 APR 2012 11:14:00'
+

@@ -369,7 +369,6 @@ spec:
         - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
         - --election-id=ingress-controller-leader
         - --watch-ingress-without-class=true
-        - --default-backend-service=app-space/default-http-backend
         - --controller-class=k8s.io/ingress-nginx
         - --ingress-class=nginx
         - --configmap=$(POD_NAMESPACE)/ingress-nginx-controller
@@ -437,19 +436,11 @@ spec:
             drop:
             - ALL
           runAsUser: 101
-        volumeMounts:
-        - mountPath: /usr/local/certificates/
-          name: webhook-cert
-          readOnly: true
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 300
-      volumes:
-      - name: webhook-cert
-        secret:
-          secretName: ingress-nginx-admission
 
 ---
 

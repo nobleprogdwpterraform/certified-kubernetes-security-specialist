@@ -1,3 +1,4 @@
 
-		netstat -natp  | grep 9090 (Identify the service listening on port 9090)
+		sudo netstat -natp  | grep 9090 (Identify the service listening on port 9090)
 		systemctl stop apache2 (Kill/Stop the service to free the port)
+		cat /etc/services | grep 22

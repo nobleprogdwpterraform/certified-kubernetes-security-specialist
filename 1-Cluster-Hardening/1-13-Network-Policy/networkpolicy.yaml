@@ -14,13 +14,13 @@ spec:
     - podSelector:
         matchLabels:
           role: api-pod
-    ports:
-    - protocol: TCP
-      port: 3306
-  egress:
-  - to:
+    
+      namespaceSelector:
+        matchLabels:
+          role: api-pod
+    
     - ipBlock:
-        cidr: 192.168.2.4
+        
     ports:
     - protocol: TCP
       port: 3306

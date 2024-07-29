@@ -1,2 +1,12 @@
 
-		docker run -it --rm --security-opt seccomp=/root/custom.json \ docker/whalesay /bin/bash
+		grep -i seccomp /boot/config-$(uname -r)
+
+		docker run -it --rm docker/whalesay /bin/bash
+		date -s '19 APR 2000 22:00:00'
+		ps -ef | grep Seccomp /proc/1/status
+
+		(try removing mkdir command from custom.json and then run below container, then try running mkdir from bash)
+		sudo docker run -it --rm --security-opt seccomp=custom.json docker/whalesay /bin/bash
+		
+		sudo docker run -it --rm --security-opt seccomp=unconfined docker/whalesay /bin/bash
+

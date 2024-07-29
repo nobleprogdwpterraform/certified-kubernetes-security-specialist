@@ -1,0 +1,43 @@
+1: apply pod security on namespace alpha.
+kubectl create ns alpha
+kubectl label ns alpha pod-security.kubernetes.io/warn=baseline
+
+2:
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: baseline-pod
+  namespace: alpha
+spec:
+  containers:
+  - image: nginx
+    name: baseline-pod
+    securityContext:
+       privileged: true
+EOF
+
+# shuold result in warning
+
+3: Multi PSA
+kubectl create ns beta
+kubectl label ns beta \
+pod-security.kubernetes.io/enforce=baseline \
+pod-security.kubernetes.io/warn=restricted	
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-psa
+  namespace: beta
+spec:
+  containers:
+  - name: multi-psa
+    image: nginx
+    securityContext:
+      runAsUser: 0
+      privileged: true
+EOF
+
+#Above will violate the baseline policy by running privileged:true so it will be forbidden to create

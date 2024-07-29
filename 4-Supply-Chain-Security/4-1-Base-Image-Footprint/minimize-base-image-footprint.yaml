@@ -1,0 +1,4 @@
+
+sudo snap install trivy
+trivy image httpd
+trivy image httpd:alpine
