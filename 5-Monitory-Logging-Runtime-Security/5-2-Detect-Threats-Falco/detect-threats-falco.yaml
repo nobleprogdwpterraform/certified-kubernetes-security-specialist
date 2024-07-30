@@ -1,0 +1,25 @@
+create a nginx pod:
+kubectl run nginx --image nginx 
+
+On a separate terminal ssh to node01 and check falco logs: sudo journalctl _COMM=falco -p warning
+
+open a shell on the nginx container by: kubectl exec -it nginx -- bash
+
+read the content of /etc/shadow file inside the container: cat /etc/shadow
+
+#Sample falco rule
+- rule: Detect shell inside a container
+  desc: Alert if a shell such as bash is open inside the container
+  condition: container.id != host and proc.name = bash
+  output: Bash opened (user=%user.name container=%container.id)
+  priority: WARNING
+
+
+Falco Configuation file: cat /etc/falco/falco.yaml 
+
+
+Falco rules file: cat /etc/falco/falco_rules.yaml
+
+
+
+

@@ -1,0 +1,45 @@
+To Record the event if pods inside the prod-namespace are deleted:
+sudo chmod a+rw -R /etc/kubernetes
+sudo cat > /etc/kubernetes/prod-audit.yaml <<EOF
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+- level: Metadata
+  namespaces: ["prod"]
+  verbs: ["delete"]
+  resources:
+  - group: ""
+    resources: ["secrets"]
+EOF
+
+
+Enalble auditing:
+1. Add these arguments into api server manifest:
+- --audit-policy-file=/etc/kubernetes/prod-audit.yaml
+- --audit-log-path=/var/log/prod-secrets.log
+
+2. Add these mounts:
+- mountPath: /etc/kubernetes/prod-audit.yaml
+  name: audit
+  readOnly: true
+- mountPath: /var/log/prod-secrets.log
+  name: audit-log
+  readOnly: false
+
+3. Add these volumes:
+- name: audit
+  hostPath:
+    path: /etc/kubernetes/prod-audit.yaml
+    type: File
+- name: audit-log
+  hostPath:
+    path: /var/log/prod-secrets.log
+    type: FileOrCreate
+
+Test the auditing:
+kubectl create ns prod
+kubectl create secret -n prod generic test --from-literal x=1
+kubectl delete secret -n prod test
+
+cat /var/log/prod-secrets.log
+  
