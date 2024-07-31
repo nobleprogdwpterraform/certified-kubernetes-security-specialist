@@ -99,12 +99,14 @@ sudo kubeadm init --pod-network-cidr $POD_CIDR --service-cidr $SERVICE_CIDR --ap
 #16 Verify the controlplane node
 kubectl get pods -n kube-system
 
-#17
+#17 Install weavenet as pods
 kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml"
-#18
+
+#18 Print join command to join the worker nodes
 kubeadm token create --print-join-command
 
 ---Run below on all worker nodes--
 #18
 Run the join command on all the worker nodes in cluster
+sudo join_command_from_step_18
  

@@ -1,3 +1,13 @@
+Pod Security Standards(PSS): https://kubernetes.io/docs/concepts/security/pod-security-standards/
+Privileged: This policy grants the highest level of access without any restrictions.
+Baseline: This policy aims to be highly restrictive to prevent known privilege escalation while still allowing the use of the default Pod configuration with minimal alterations. 
+Restricted: This strict policy follows current best practices for hardening Pods. 
+
+Pod Security Admission(PSA) operates in three modes to enforce the controls defined by PSS:
+Enforce: When this mode is enabled, the PSA evaluates the Pod against the policy. If the Pod fails to meet the policy requirements, it is rejected.
+Audit: In this mode, the Pod is allowed to run even if it violates the policy. However, the violation is recorded in the Kubernetes audit log.
+Warn: This mode generates a warning for any policy violation but does not prevent the Pod from running.
+
 1: apply pod security on namespace alpha.
 kubectl create ns alpha
 kubectl label ns alpha pod-security.kubernetes.io/warn=baseline
@@ -19,7 +29,7 @@ EOF
 
 # shuold result in warning
 
-3: Multi PSA
+3: Multi PSA:
 kubectl create ns beta
 kubectl label ns beta \
 pod-security.kubernetes.io/enforce=baseline \

@@ -1,12 +1,20 @@
+Run this lab in Host machine terminal:
 
-		grep -i seccomp /boot/config-$(uname -r)
+grep -i seccomp /boot/config-$(uname -r)
 
-		docker run -it --rm docker/whalesay /bin/bash
-		date -s '19 APR 2000 22:00:00'
-		ps -ef | grep Seccomp /proc/1/status
+#if docker is not installed: sudo snap install docker
 
-		(try removing mkdir command from custom.json and then run below container, then try running mkdir from bash)
-		sudo docker run -it --rm --security-opt seccomp=custom.json docker/whalesay /bin/bash
-		
-		sudo docker run -it --rm --security-opt seccomp=unconfined docker/whalesay /bin/bash
+sudo docker run -it --rm docker/whalesay /bin/bash
+date -s '19 APR 2000 22:00:00'
+
+ps -ef | grep Seccomp /proc/1/status
+
+(try removing mkdir command from custom.json and then run below container, then try running mkdir from bash)
+on host machine
+cd /Downloads/certified-kubernetes-security-specialist
+
+sudo docker run -it --rm --security-opt seccomp=2-System-Hardening/2-10-Restrict-syscalls-using-seccomp/custom.json docker/whalesay /bin/bash
+mkdir test
+
+sudo docker run -it --rm --security-opt seccomp=unconfined docker/whalesay /bin/bash
 

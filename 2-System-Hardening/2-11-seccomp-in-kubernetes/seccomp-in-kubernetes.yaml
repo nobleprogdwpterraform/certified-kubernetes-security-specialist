@@ -9,7 +9,7 @@ cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-violation1
+  name: test-violation
 spec:
   securityContext:
     seccompProfile:
@@ -21,59 +21,9 @@ spec:
     command: ["bash", "-c", "echo 'Syscalls invoked' && sleep 100"]
 EOF
 
-# verify pod failed to start by kubectl describe pod test-violation1
+# verify pod failed to start by kubectl describe pod test-violation
 
-
-
-===========AppArmor========
-1. sudo apt install  apparmor-utils -y
-
-2. create add_date.sh with below commands
-#!/bin/bash
-echo "=>  File created at `date`" | tee /opt/add/datacreate.log
-
-3. aa-genprof /root/add_data.sh
-
-4. In separate terminal run add_data.sh: sudo bash add_data.sh
-5. In previous terminal select 
-
-=======AppArmor in Kubernetes============
-1. Create AppArmor profile
-sudo apparmor_parser -q <<EOF
-#include <tunables/global>
-
-profile k8s-apparmor-example-deny-write flags=(attach_disconnected) {
-  #include <abstractions/base>
-
-  file,
-
-  # Deny all file writes.
-  deny /** w,
-}
-EOF
-
-2. Create a pod which used apparmor profile
-cat <<EOF | kubectl create -f -
-apiVersion: v1
-kind: Pod
-metadata:
-  name: hello-apparmor
-spec:
-  securityContext:
-    appArmorProfile:
-      type: Localhost
-      localhostProfile: k8s-apparmor-example-deny-write
-  containers:
-  - name: hello
-    image: busybox:1.28
-    command: [ "sh", "-c", "echo 'Hello AppArmor!' && sleep 1h" ]
-EOF
-  
-3. Check apparomor status
-kubectl exec hello-apparmor -- cat /proc/1/attr/current
-
-4. Try violating 
-kubectl exec hello-apparmor -- touch /tmp/test
+Now replace the seccomp profile type to RuntimeDefault and create the pod again to verify it runs successfully
 
 
 
