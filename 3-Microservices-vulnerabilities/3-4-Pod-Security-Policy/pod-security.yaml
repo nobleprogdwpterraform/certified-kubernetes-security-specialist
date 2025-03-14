@@ -28,7 +28,6 @@ spec:
 EOF
 
 # shuold result in warning
-
 3: Multi PSA:
 kubectl create ns beta
 kubectl label ns beta \

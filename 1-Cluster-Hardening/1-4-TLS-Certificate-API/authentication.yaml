@@ -18,6 +18,6 @@ spec:
   cat sahdev.csr | base64 | tr -d "\n"
   kubectl get csr
   kubectl certificate approve sahdev
-  kubectl get csr sahdev -o
+  kubectl get csr sahdev -o yaml 
 	kubectl get csr sahdev -o jsonpath='{.status.certificate}'
 
