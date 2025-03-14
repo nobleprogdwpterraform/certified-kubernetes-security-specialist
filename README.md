@@ -54,7 +54,7 @@ sudo apt-get install -y containerd
 sudo systemctl restart containerd
 
 # 7. kubernetes latest version
-KUBE_LATEST=1.30
+KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
 
 
 # 8. Adding Kubernetes APT Repository GPG Key
