@@ -1,6 +1,0 @@
-
-		- find kubelet service first. ps -aux | grep kubelet 
-		- check the value of --config parameter in kubelet process 
-		- cat /var/lib/kubelet/config.yaml
-
-		- full access port 10250 and read-only access on port 10255

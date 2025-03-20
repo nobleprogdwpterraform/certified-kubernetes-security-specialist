@@ -1,8 +1,8 @@
 	
-   
-		systemctl list-units --all | grep nginx (check the service and its unit file)
-		systemctl stop nginx (stop the service)
-		rm /lib/systemd/system/nginx.service (remove the unit file)
-	- Remove the nginx package from controlplane host.
-		apt remove nginx -y
+sudo apt install nginx
+systemctl list-units --all | grep nginx (check the service and its unit file)
+systemctl stop nginx (stop the service)
+rm /lib/systemd/system/nginx.service (remove the unit file)
+#Remove the nginx package from controlplane host.
+apt remove nginx -y
 		

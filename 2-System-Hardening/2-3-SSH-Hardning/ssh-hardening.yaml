@@ -1,14 +1,22 @@
 
 
-	- Create a user named jim on node02 host and configure password-less ssh access from controlplane host (from user root) to node02 host (to user jim).
-	ssh node02
-	adduser jim
-	ssh-keygen -t rsa
-	ssh-copy-id -i id_rsa.pub jim@node02
-	ssh jim@node02
-	
-	Disable ssh root login and disable password authentication for ssh on node02 host.
-	On node02 host open /etc/ssh/sshd_config
-	PermitRootLogin no
-	PasswordAuthentication no
-	Restart sshd service by using command service sshd restart
+- Create a user named jim on node02 host and configure password-less ssh access from controlplane host (from user root) to node02 host (to user jim).
+# on node02
+sudo adduser jim
+# from localhost
+ssh jim@10.0.3.18
+
+
+# from localhost
+ssh-keygen -t rsa
+ssh-copy-id -i jim.pub jim@10.0.3.18
+ssh -i jim jim@10.0.3.18
+cat ~/.ssh/authorized_keys
+
+
+# Disable ssh root login and disable password authentication for ssh on node02 host. On node02 host open 
+sudo vi /etc/ssh/sshd_config
+PermitRootLogin no
+PasswordAuthentication no
+# Restart sshd service by using command 
+sudo service sshd restart

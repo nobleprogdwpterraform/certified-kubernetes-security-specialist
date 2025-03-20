@@ -1,3 +1,4 @@
+cat <<EOF | kubectl create -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -14,14 +15,14 @@ spec:
     - podSelector:
         matchLabels:
           role: api-pod
-    
-      namespaceSelector:
-        matchLabels:
-          role: api-pod
-    
-    - ipBlock:
-        
     ports:
     - protocol: TCP
       port: 3306
-
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.2.4/24
+    ports:
+    - protocol: TCP
+      port: 3306
+EOF

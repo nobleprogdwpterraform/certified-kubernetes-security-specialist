@@ -1,15 +1,33 @@
 
-	Copy content of ./.kube/config to home diretory on host at location .kube/config
-	verify kubectl get pods -A
+Copy content of ./.kube/config to home diretory on host at location .kube/config
+# On host machine create .kube/config file and paste content of config file from controlplane node
+cd $HOME
+mkdir .kube
+vi config 
+
+#Now install kubectl on host machine
+KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
+{
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+}
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${KUBE_LATEST}/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubectl
+
+#verify 
+kubectl get pods -A
 	
 		
-		kubectl proxy --api-prefix=/
-		http://localhost:8001/api/v1/pods /apis/apps/v1/deployments
+kubectl proxy --api-prefix=/
+http://localhost:8001/api/v1/pods
 
 
-		kubectl run nginx-pod --image=nginx --restart=Never --port=80 -n default
-		kubectl expose pod nginx-pod --type=NodePort --port=80 --name=nginx-service
-		http://node01_ip:30368 on host machine 
+kubectl run nginx-pod --image=nginx --restart=Never --port=80 -n default
+kubectl expose pod nginx-pod --type=NodePort --port=80 --name=nginx-service
+http://node01_ip:30368 on host machine 
 
-		kubectl port-forward service/nginx-service 8005:80
-		on host machine: http://localhost:8005
+kubectl port-forward service/nginx-service 8005:80
+on host machine: http://localhost:8005

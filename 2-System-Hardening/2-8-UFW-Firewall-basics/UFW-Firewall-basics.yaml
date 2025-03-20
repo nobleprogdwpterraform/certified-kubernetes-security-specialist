@@ -1,10 +1,15 @@
 sudo apt-get update
 sudo apt-get install ufw
-		
-		sudo ufw allow from 172.16.238.5 to any port 22 proto tcp (this command allow connection from the IP address 172.16.238.5 to the TCP board 22 on ANY reachable IP address on node01)
-		sudo ufw deny 8080
-		sudo ufw enable
-	
-		sudo ufw delete deny 8080
-		
-	- Alternatively we can also specify the line number of associated with the rule that we want to delete 
+
+systemctl enable ufw
+sudo ufw status
+sudo ufw enable
+
+
+sudo ufw allow from 172.16.238.5 to any port 22 proto tcp (this command allow connection from the IP address 172.16.238.5 to the TCP port 22 on ANY reachable IP address on node01)
+sudo ufw deny 8080
+sudo ufw enable
+
+sudo ufw delete deny 8080
+
+- Alternatively we can also specify the line number of associated with the rule that we want to delete 
