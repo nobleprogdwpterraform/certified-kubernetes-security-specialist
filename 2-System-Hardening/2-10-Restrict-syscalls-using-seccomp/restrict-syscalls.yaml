@@ -4,7 +4,7 @@ grep -i seccomp /boot/config-$(uname -r)
 
 #if docker is not installed: sudo snap install docker
 
-sudo docker run -it --rm docker/whalesay /bin/bash
+sudo docker run -it --rm chuanwen/cowsay /bin/bash
 date -s '19 APR 2000 22:00:00'
 
 ps -ef | grep Seccomp /proc/1/status
@@ -13,8 +13,8 @@ ps -ef | grep Seccomp /proc/1/status
 on host machine
 cd /Downloads/certified-kubernetes-security-specialist
 
-sudo docker run -it --rm --security-opt seccomp=2-System-Hardening/2-10-Restrict-syscalls-using-seccomp/custom.json docker/whalesay /bin/bash
+sudo docker run -it --rm --security-opt seccomp=2-System-Hardening/2-10-Restrict-syscalls-using-seccomp/custom.json chuanwen/cowsay /bin/bash
 mkdir test
 
-sudo docker run -it --rm --security-opt seccomp=unconfined docker/whalesay /bin/bash
+sudo docker run -it --rm --security-opt seccomp=unconfined chuanwen/cowsay /bin/bash
 
